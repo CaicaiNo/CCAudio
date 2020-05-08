@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041ED94524658E9400897FF8 /* GSAudioUnitPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 041ED94324658E9400897FF8 /* GSAudioUnitPlayer.m */; };
 		F361F57A2465270B00344932 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F361F5792465270B00344932 /* AppDelegate.m */; };
 		F361F5832465270B00344932 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F361F5812465270B00344932 /* Main.storyboard */; };
 		F361F5852465270D00344932 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F361F5842465270D00344932 /* Assets.xcassets */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		041ED94324658E9400897FF8 /* GSAudioUnitPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSAudioUnitPlayer.m; sourceTree = "<group>"; };
+		041ED94424658E9400897FF8 /* GSAudioUnitPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSAudioUnitPlayer.h; sourceTree = "<group>"; };
 		F361F5752465270B00344932 /* CCAudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCAudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F361F5782465270B00344932 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F361F5792465270B00344932 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -47,6 +50,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041ED94224658E8600897FF8 /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				041ED94424658E9400897FF8 /* GSAudioUnitPlayer.h */,
+				041ED94324658E9400897FF8 /* GSAudioUnitPlayer.m */,
+			);
+			path = Play;
+			sourceTree = "<group>";
+		};
 		F361F56C2465270B00344932 = {
 			isa = PBXGroup;
 			children = (
@@ -71,7 +83,7 @@
 				F361F5962465280500344932 /* CCAudioViewController.h */,
 				F361F5972465280500344932 /* CCAudioViewController.m */,
 				F361F5982465280500344932 /* CCAudioViewController.xib */,
-				F361F5922465275400344932 /* Play */,
+				041ED94224658E8600897FF8 /* Play */,
 				F361F5912465274B00344932 /* Record */,
 				F361F5812465270B00344932 /* Main.storyboard */,
 				F361F5842465270D00344932 /* Assets.xcassets */,
@@ -91,13 +103,6 @@
 				F361F59C24652D7D00344932 /* GSAudioCapture.m */,
 			);
 			path = Record;
-			sourceTree = "<group>";
-		};
-		F361F5922465275400344932 /* Play */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Play;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,6 +179,7 @@
 				F361F57A2465270B00344932 /* AppDelegate.m in Sources */,
 				F361F5A024652DA400344932 /* GSLiveAudioConfiguration.m in Sources */,
 				F361F5992465280500344932 /* CCAudioViewController.m in Sources */,
+				041ED94524658E9400897FF8 /* GSAudioUnitPlayer.m in Sources */,
 				F361F58B2465270D00344932 /* main.m in Sources */,
 				F361F59D24652D7D00344932 /* GSAudioCapture.m in Sources */,
 			);
@@ -316,6 +322,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6GHP23DFJR;
 				INFOPLIST_FILE = CCAudio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -333,6 +340,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6GHP23DFJR;
 				INFOPLIST_FILE = CCAudio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (

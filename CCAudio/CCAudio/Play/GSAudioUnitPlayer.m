@@ -1,23 +1,25 @@
 //
-//  GSAudioCapture.m
-//  LFLiveKit
+//  GSAudioUnitPlayer.m
+//  RtSDK
 //
-//  Created by LaiFeng on 16/5/20.
-//  Copyright © 2016年 LaiFeng All rights reserved.
+//  Created by gensee on 2020/5/7.
+//  Copyright © 2020 Geensee. All rights reserved.
 //
 
-#import "GSAudioCapture.h"
+#import "GSAudioUnitPlayer.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
+//#import "GSPCMWriter.h"
 
 #define kOutputBus 0
 #define kInputBus 1
 
+#define WRITE_PCM 0
+
 static BOOL checkError(OSStatus error, const char *operation);
 
-NSString *const GSAudioComponentFailedToCreateNotification = @"GSAudioComponentFailedToCreateNotification";
 
-@interface GSAudioCapture ()
+@interface GSAudioUnitPlayer ()
 
 @property (nonatomic, assign) AudioComponentInstance componetInstance;
 @property (nonatomic, assign) AudioComponent component;
@@ -26,101 +28,97 @@ NSString *const GSAudioComponentFailedToCreateNotification = @"GSAudioComponentF
 @property (nonatomic, strong,nullable) GSLiveAudioConfiguration *configuration;
 
 @end
-
-@implementation GSAudioCapture
-
+@implementation GSAudioUnitPlayer {
+    double preferredSampleRate;
+#if WRITE_PCM
+    GSPCMWriter *pcmWriter;
+#endif
+}
 #pragma mark -- LiftCycle
 - (instancetype)initWithAudioConfiguration:(GSLiveAudioConfiguration *)configuration{
     if(self = [super init]){
+#if WRITE_PCM
+        pcmWriter = [[GSPCMWriter alloc] init];
+#endif
         _configuration = configuration;
         self.isRunning = NO;
-        self.taskQueue = dispatch_queue_create("com.gensee.audioCaptureQueue", NULL);
+        self.taskQueue = dispatch_queue_create("com.gensee.audioUnitQueue", NULL);
         
         AVAudioSession *session = [AVAudioSession sharedInstance];
+        preferredSampleRate = session.sampleRate;
         
-        //这里没有处理相关通知所以注释了
-//        [[NSNotificationCenter defaultCenter] addObserver: self
-//                                                 selector: @selector(handleRouteChange:)
-//                                                     name: AVAudioSessionRouteChangeNotification
-//                                                   object: session];
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(handleRouteChange:)
+                                                     name: AVAudioSessionRouteChangeNotification
+                                                   object: session];
         [[NSNotificationCenter defaultCenter] addObserver: self
                                                  selector: @selector(handleInterruption:)
                                                      name: AVAudioSessionInterruptionNotification
                                                    object: session];
         
-        AudioComponentDescription acd;
-        acd.componentType = kAudioUnitType_Output;
-        acd.componentSubType = kAudioUnitSubType_VoiceProcessingIO; //Voice ProcessingIO 提供了回音消除
-//        acd.componentSubType = kAudioUnitSubType_RemoteIO; //一般录制使用RemoteIO可以满足
-        acd.componentManufacturer = kAudioUnitManufacturer_Apple;
-        acd.componentFlags = 0;
-        acd.componentFlagsMask = 0;
-        
-        self.component = AudioComponentFindNext(NULL, &acd);
-        
-        OSStatus status = noErr;
-        status = AudioComponentInstanceNew(self.component, &_componetInstance);
-        
-        if (noErr != status) {
-            [self handleAudioComponentCreationFailure];
-        }
-        
-        UInt32 flagIn = 1;  // YES
-        UInt32 flagOut = 0; // NO
-        // Enable IO for recording - 打开录制IO
-        AudioUnitSetProperty(self.componetInstance, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input, kInputBus, &flagIn, sizeof(flagIn));
-        // Enable IO for playback - 关闭播放IO
-        AudioUnitSetProperty(self.componetInstance, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, kOutputBus, &flagOut, sizeof(flagOut));
+        [self resetAudioUnit];
         
         
-        AudioStreamBasicDescription desc = {0};
-        desc.mSampleRate = _configuration.audioSampleRate; //采样率 48000 16000 8000
-        desc.mFormatID = kAudioFormatLinearPCM; //数据类型
-        desc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked;
-        desc.mChannelsPerFrame = (UInt32)_configuration.numberOfChannels; //通道数
-        desc.mFramesPerPacket = 1;
-        desc.mBitsPerChannel = 16;
-        desc.mBytesPerFrame = (desc.mBitsPerChannel / 8) * desc.mChannelsPerFrame;
-        desc.mBytesPerPacket = desc.mBytesPerFrame * desc.mFramesPerPacket;
-        
-        [self printASBD:desc]; //打印 AudioStreamBasicDescription
-        
-        
-        AURenderCallbackStruct cb;
-        //bridge指针，用于回调callback时取得self实例
-        cb.inputProcRefCon = (__bridge void *)(self);
-        //回调函数
-        cb.inputProc = handleInputBuffer;
-        //设置Element 1即Input Bus的输出为desc设置的参数，就保证我们获取的数据符合我们的要求
-        AudioUnitSetProperty(self.componetInstance, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, kInputBus, &desc, sizeof(desc));
-        //设置Output的回调，即数据输出的回调，这里kAudioUnitScope_Global表示上下文全局，也可以改为kAudioUnitScope_Output
-        AudioUnitSetProperty(self.componetInstance, kAudioOutputUnitProperty_SetInputCallback, kAudioUnitScope_Global, kInputBus, &cb, sizeof(cb));
-        
-        //这里由于设置了 kAudioUnitSubType_VoiceProcessingIO 回音消除，所以需要设置 kAUVoiceIOProperty_BypassVoiceProcessing
-        //kAudioUnitSubType_RemoteIO 可以忽略
-        UInt32 echoCancellation;
-        UInt32 size = sizeof(echoCancellation);
-        AudioUnitGetProperty(self.componetInstance,
-                             kAUVoiceIOProperty_BypassVoiceProcessing,
-                             kAudioUnitScope_Global,
-                             0,
-                             &echoCancellation,
-                             &size);
-
-        status = AudioUnitInitialize(self.componetInstance);
-        
-        if (noErr != status) {
-            [self handleAudioComponentCreationFailure];
-        }
-        
-        [session setPreferredSampleRate:_configuration.audioSampleRate error:nil];
-        //音频session设置AVAudioSessionCategoryOptions 默认为 AVAudioSessionCategoryOptionDefaultToSpeaker|AVAudioSessionCategoryOptionAllowBluetooth|AVAudioSessionCategoryOptionMixWithOthers
         [session setCategory:AVAudioSessionCategoryPlayAndRecord
                  withOptions:_configuration.sessionCategoryOption
                        error:nil];
         [session setActive:YES error:nil];
     }
     return self;
+}
+
+- (void)resetAudioUnit {
+    AudioComponentDescription acd;
+    acd.componentType = kAudioUnitType_Output;
+    //        acd.componentSubType = kAudioUnitSubType_VoiceProcessingIO;
+    acd.componentSubType = kAudioUnitSubType_RemoteIO;
+    acd.componentManufacturer = kAudioUnitManufacturer_Apple;
+    acd.componentFlags = 0;
+    acd.componentFlagsMask = 0;
+    
+    self.component = AudioComponentFindNext(NULL, &acd);
+    
+    OSStatus status = noErr;
+    status = AudioComponentInstanceNew(self.component, &_componetInstance);
+    
+    if (noErr != status) {
+        [self handleAudioComponentCreationFailure];
+    }
+    
+    //        UInt32 flagIn = 0;  // YES
+    UInt32 flagOut = 1; // NO
+    // Enable IO for recording - 打开录制IO
+    //        AudioUnitSetProperty(self.componetInstance, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input, kInputBus, &flagIn, sizeof(flagIn));
+    // Enable IO for playback - 打开播放IO
+    AudioUnitSetProperty(self.componetInstance, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, kOutputBus, &flagOut, sizeof(flagOut));
+    
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    AudioStreamBasicDescription desc = {0};
+    desc.mSampleRate = session.sampleRate;
+    desc.mFormatID = kAudioFormatLinearPCM;
+    desc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked;
+    desc.mChannelsPerFrame = (UInt32)_configuration.numberOfChannels;
+    desc.mFramesPerPacket = 1;
+    desc.mBitsPerChannel = 16;
+    desc.mBytesPerFrame = (desc.mBitsPerChannel / 8) * desc.mChannelsPerFrame;
+    desc.mBytesPerPacket = desc.mBytesPerFrame * desc.mFramesPerPacket;
+    
+    [self printASBD:desc];
+    
+    
+    AURenderCallbackStruct cb;
+    cb.inputProcRefCon = (__bridge void *)(self);
+    cb.inputProc = playbackCallback;
+    AudioUnitSetProperty(self.componetInstance, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, kOutputBus, &desc, sizeof(desc));
+    //        AudioUnitSetProperty(self.componetInstance, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, kInputBus, &desc, sizeof(desc));
+    AudioUnitSetProperty(self.componetInstance, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, kOutputBus, &cb, sizeof(cb));
+    
+    
+    status = AudioUnitInitialize(self.componetInstance);
+    
+    if (noErr != status) {
+        [self handleAudioComponentCreationFailure];
+    }
 }
 
 - (void)dealloc {
@@ -143,17 +141,24 @@ NSString *const GSAudioComponentFailedToCreateNotification = @"GSAudioComponentF
     _running = running;
     if (_running) {
         dispatch_async(self.taskQueue, ^{
-            self.isRunning = YES;
-            NSLog(@"MicrophoneSource: startRunning");
-            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord
-                                             withOptions:self.configuration.sessionCategoryOption
-                                                   error:nil];
+            
+            NSLog(@"GSAudioUnitPlayer: startRunning");
+            AVAudioSession *session = [AVAudioSession sharedInstance];
+            if (self.delegate && [self.delegate respondsToSelector:@selector(audioUnitOnSetChannel:sampleRate:duration:)]) {
+                [self.delegate audioUnitOnSetChannel:(int)self.configuration.numberOfChannels sampleRate:(int)session.sampleRate duration:0];
+            }
+            if (session.category != AVAudioSessionCategoryPlayAndRecord) {
+                [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                         withOptions:self.configuration.sessionCategoryOption
+                               error:nil];
+            }
             AudioOutputUnitStart(self.componetInstance);
+            self.isRunning = YES;
         });
     } else {
         dispatch_sync(self.taskQueue, ^{
             self.isRunning = NO;
-            NSLog(@"MicrophoneSource: stopRunning");
+            NSLog(@"GSAudioUnitPlayer: stopRunning");
             AudioOutputUnitStop(self.componetInstance);
         });
     }
@@ -161,14 +166,11 @@ NSString *const GSAudioComponentFailedToCreateNotification = @"GSAudioComponentF
 
 #pragma mark -- CustomMethod
 - (void)handleAudioComponentCreationFailure {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:GSAudioComponentFailedToCreateNotification object:nil];
-    });
 }
 
 #pragma mark -- NSNotification
 - (void)handleRouteChange:(NSNotification *)notification {
-    AVAudioSession *session = [ AVAudioSession sharedInstance ];
+    AVAudioSession *session = [AVAudioSession sharedInstance];
     NSString *seccReason = @"";
     NSInteger reason = [[[notification userInfo] objectForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     //  AVAudioSessionRouteDescription* prevRoute = [[notification userInfo] objectForKey:AVAudioSessionRouteChangePreviousRouteKey];
@@ -197,6 +199,12 @@ NSString *const GSAudioComponentFailedToCreateNotification = @"GSAudioComponentF
         break;
     }
     NSLog(@"handleRouteChange reason is %@", seccReason);
+    if (preferredSampleRate != session.sampleRate) {
+        self.running = NO;
+        preferredSampleRate = session.sampleRate;
+        [self resetAudioUnit];
+        self.running = YES;
+    }
     if (session.currentRoute) {
         if (session.currentRoute.inputs) {
             NSArray<AVAudioSessionPortDescription *>*inputs = session.currentRoute.inputs;
@@ -251,46 +259,36 @@ NSString *const GSAudioComponentFailedToCreateNotification = @"GSAudioComponentF
 }
 
 #pragma mark -- CallBack
-static OSStatus handleInputBuffer(void *inRefCon,
+
+
+static OSStatus playbackCallback(void *inRefCon,
                                   AudioUnitRenderActionFlags *ioActionFlags,
                                   const AudioTimeStamp *inTimeStamp,
                                   UInt32 inBusNumber,
                                   UInt32 inNumberFrames,
                                   AudioBufferList *ioData) {
+    // Notes: ioData contains buffers (may be more than one!)
+    // Fill them up as much as you can. Remember to set the size value in each buffer to match how
+    // much data is in the buffer.
     @autoreleasepool {
-        GSAudioCapture *source = (__bridge GSAudioCapture *)inRefCon;
-        if (!source) return -1;
-
-        AudioBuffer buffer;
-        buffer.mData = NULL;
-        buffer.mDataByteSize = 0;
-        buffer.mNumberChannels = 1;
-
-        AudioBufferList buffers;
-        buffers.mNumberBuffers = 1;
-        buffers.mBuffers[0] = buffer;
-
-        OSStatus status = AudioUnitRender(source.componetInstance,
-                                          ioActionFlags,
-                                          inTimeStamp,
-                                          inBusNumber,
-                                          inNumberFrames,
-                                          &buffers);
-
-        if (source.muted) {
-            for (int i = 0; i < buffers.mNumberBuffers; i++) {
-                AudioBuffer ab = buffers.mBuffers[i];
-                memset(ab.mData, 0, ab.mDataByteSize);
+        
+        GSAudioUnitPlayer * player = (__bridge GSAudioUnitPlayer*)inRefCon;
+        if (!player) return -1;
+        if (player.running) {
+            if (player.delegate && [player.delegate respondsToSelector:@selector(audioUnitOnGetData:numberFrames:audioData:)]) {
+                [player.delegate audioUnitOnGetData:ioActionFlags numberFrames:inNumberFrames audioData:ioData];
             }
-        }
-
-        if (!status) {
-            if (source.delegate && [source.delegate respondsToSelector:@selector(captureOutput:audioData:)]) {
-                [source.delegate captureOutput:source audioData:[NSData dataWithBytes:buffers.mBuffers[0].mData length:buffers.mBuffers[0].mDataByteSize]];
+#if WRITE_PCM
+            if (player->pcmWriter) {
+                AudioBuffer buffer = ioData->mBuffers[0];
+                [player->pcmWriter writePCM:(void*)buffer.mData length:buffer.mDataByteSize];
             }
+#endif
+        }else {
+            return -1;
         }
-        return status;
     }
+    return noErr;
 }
 
 
@@ -334,5 +332,4 @@ static BOOL checkError(OSStatus error, const char *operation)
     
     return YES;
 }
-
 @end
