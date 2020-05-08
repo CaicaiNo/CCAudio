@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CCAudioViewController">
+            <connections>
+                <outlet property="playBtn" destination="r0w-Fc-pTM" id="zhC-98-xjr"/>
+                <outlet property="recordBtn" destination="dra-G3-bfN" id="4P0-GD-6MB"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dra-G3-bfN">
+                    <rect key="frame" x="20" y="84" width="374" height="120"/>
+                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="fEB-EC-Hal"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="录制 Record">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="recordAction:" destination="-1" eventType="touchUpInside" id="lWf-Bb-4gz"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0w-Fc-pTM">
+                    <rect key="frame" x="20" y="222" width="374" height="120"/>
+                    <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="播放 Play">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="playAction:" destination="-1" eventType="touchUpInside" id="FOc-lR-gDs"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="r0w-Fc-pTM" firstAttribute="top" secondItem="dra-G3-bfN" secondAttribute="bottom" constant="18" id="9MW-2g-DDi"/>
+                <constraint firstItem="r0w-Fc-pTM" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AD5-Sf-Y9m"/>
+                <constraint firstItem="dra-G3-bfN" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="40" id="DBU-nd-zJv"/>
+                <constraint firstItem="dra-G3-bfN" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="ILL-ya-3QD"/>
+                <constraint firstItem="dra-G3-bfN" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aE3-Ij-EZe"/>
+                <constraint firstItem="r0w-Fc-pTM" firstAttribute="height" secondItem="dra-G3-bfN" secondAttribute="height" id="gDW-li-bEO"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="dra-G3-bfN" secondAttribute="trailing" constant="20" id="i7T-gs-7SY"/>
+                <constraint firstItem="r0w-Fc-pTM" firstAttribute="width" secondItem="dra-G3-bfN" secondAttribute="width" id="xvJ-rK-RGz"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="131.8840579710145" y="141.96428571428569"/>
+        </view>
+    </objects>
+</document>

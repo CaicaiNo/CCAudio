@@ -1,0 +1,372 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F361F57A2465270B00344932 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F361F5792465270B00344932 /* AppDelegate.m */; };
+		F361F5832465270B00344932 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F361F5812465270B00344932 /* Main.storyboard */; };
+		F361F5852465270D00344932 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F361F5842465270D00344932 /* Assets.xcassets */; };
+		F361F5882465270D00344932 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F361F5862465270D00344932 /* LaunchScreen.storyboard */; };
+		F361F58B2465270D00344932 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F361F58A2465270D00344932 /* main.m */; };
+		F361F5992465280500344932 /* CCAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F361F5972465280500344932 /* CCAudioViewController.m */; };
+		F361F59A2465280500344932 /* CCAudioViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F361F5982465280500344932 /* CCAudioViewController.xib */; };
+		F361F59D24652D7D00344932 /* GSAudioCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = F361F59C24652D7D00344932 /* GSAudioCapture.m */; };
+		F361F5A024652DA400344932 /* GSLiveAudioConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = F361F59F24652DA400344932 /* GSLiveAudioConfiguration.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F361F5752465270B00344932 /* CCAudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCAudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F361F5782465270B00344932 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F361F5792465270B00344932 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F361F5822465270B00344932 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F361F5842465270D00344932 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F361F5872465270D00344932 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F361F5892465270D00344932 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F361F58A2465270D00344932 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F361F5962465280500344932 /* CCAudioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCAudioViewController.h; sourceTree = "<group>"; };
+		F361F5972465280500344932 /* CCAudioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCAudioViewController.m; sourceTree = "<group>"; };
+		F361F5982465280500344932 /* CCAudioViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CCAudioViewController.xib; sourceTree = "<group>"; };
+		F361F59B24652D7D00344932 /* GSAudioCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSAudioCapture.h; sourceTree = "<group>"; };
+		F361F59C24652D7D00344932 /* GSAudioCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSAudioCapture.m; sourceTree = "<group>"; };
+		F361F59E24652DA400344932 /* GSLiveAudioConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSLiveAudioConfiguration.h; sourceTree = "<group>"; };
+		F361F59F24652DA400344932 /* GSLiveAudioConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSLiveAudioConfiguration.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F361F5722465270B00344932 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F361F56C2465270B00344932 = {
+			isa = PBXGroup;
+			children = (
+				F361F5772465270B00344932 /* CCAudio */,
+				F361F5762465270B00344932 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F361F5762465270B00344932 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F361F5752465270B00344932 /* CCAudio.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F361F5772465270B00344932 /* CCAudio */ = {
+			isa = PBXGroup;
+			children = (
+				F361F5782465270B00344932 /* AppDelegate.h */,
+				F361F5792465270B00344932 /* AppDelegate.m */,
+				F361F5962465280500344932 /* CCAudioViewController.h */,
+				F361F5972465280500344932 /* CCAudioViewController.m */,
+				F361F5982465280500344932 /* CCAudioViewController.xib */,
+				F361F5922465275400344932 /* Play */,
+				F361F5912465274B00344932 /* Record */,
+				F361F5812465270B00344932 /* Main.storyboard */,
+				F361F5842465270D00344932 /* Assets.xcassets */,
+				F361F5862465270D00344932 /* LaunchScreen.storyboard */,
+				F361F5892465270D00344932 /* Info.plist */,
+				F361F58A2465270D00344932 /* main.m */,
+			);
+			path = CCAudio;
+			sourceTree = "<group>";
+		};
+		F361F5912465274B00344932 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				F361F59E24652DA400344932 /* GSLiveAudioConfiguration.h */,
+				F361F59F24652DA400344932 /* GSLiveAudioConfiguration.m */,
+				F361F59B24652D7D00344932 /* GSAudioCapture.h */,
+				F361F59C24652D7D00344932 /* GSAudioCapture.m */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
+		F361F5922465275400344932 /* Play */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Play;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F361F5742465270B00344932 /* CCAudio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F361F58E2465270D00344932 /* Build configuration list for PBXNativeTarget "CCAudio" */;
+			buildPhases = (
+				F361F5712465270B00344932 /* Sources */,
+				F361F5722465270B00344932 /* Frameworks */,
+				F361F5732465270B00344932 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCAudio;
+			productName = CCAudio;
+			productReference = F361F5752465270B00344932 /* CCAudio.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F361F56D2465270B00344932 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = CaicaiNo;
+				TargetAttributes = {
+					F361F5742465270B00344932 = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+				};
+			};
+			buildConfigurationList = F361F5702465270B00344932 /* Build configuration list for PBXProject "CCAudio" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F361F56C2465270B00344932;
+			productRefGroup = F361F5762465270B00344932 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F361F5742465270B00344932 /* CCAudio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F361F5732465270B00344932 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F361F5882465270D00344932 /* LaunchScreen.storyboard in Resources */,
+				F361F59A2465280500344932 /* CCAudioViewController.xib in Resources */,
+				F361F5852465270D00344932 /* Assets.xcassets in Resources */,
+				F361F5832465270B00344932 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F361F5712465270B00344932 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F361F57A2465270B00344932 /* AppDelegate.m in Sources */,
+				F361F5A024652DA400344932 /* GSLiveAudioConfiguration.m in Sources */,
+				F361F5992465280500344932 /* CCAudioViewController.m in Sources */,
+				F361F58B2465270D00344932 /* main.m in Sources */,
+				F361F59D24652D7D00344932 /* GSAudioCapture.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F361F5812465270B00344932 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F361F5822465270B00344932 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F361F5862465270D00344932 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F361F5872465270D00344932 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F361F58C2465270D00344932 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F361F58D2465270D00344932 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F361F58F2465270D00344932 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = CCAudio/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CaicaiNo.CCAudio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		F361F5902465270D00344932 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = CCAudio/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CaicaiNo.CCAudio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F361F5702465270B00344932 /* Build configuration list for PBXProject "CCAudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F361F58C2465270D00344932 /* Debug */,
+				F361F58D2465270D00344932 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F361F58E2465270D00344932 /* Build configuration list for PBXNativeTarget "CCAudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F361F58F2465270D00344932 /* Debug */,
+				F361F5902465270D00344932 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F361F56D2465270B00344932 /* Project object */;
+}
