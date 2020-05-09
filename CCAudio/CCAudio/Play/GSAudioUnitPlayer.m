@@ -94,7 +94,7 @@ static BOOL checkError(OSStatus error, const char *operation);
     
     AVAudioSession *session = [AVAudioSession sharedInstance];
     AudioStreamBasicDescription desc = {0};
-    desc.mSampleRate = session.sampleRate;
+    desc.mSampleRate = _configuration.audioSampleRate;
     desc.mFormatID = kAudioFormatLinearPCM;
     desc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked;
     desc.mChannelsPerFrame = (UInt32)_configuration.numberOfChannels;
@@ -199,12 +199,13 @@ static BOOL checkError(OSStatus error, const char *operation);
         break;
     }
     NSLog(@"handleRouteChange reason is %@", seccReason);
-    if (preferredSampleRate != session.sampleRate) {
-        self.running = NO;
-        preferredSampleRate = session.sampleRate;
-        [self resetAudioUnit];
-        self.running = YES;
-    }
+//    if (preferredSampleRate != session.sampleRate) {
+//        self.running = NO;
+//        preferredSampleRate = session.sampleRate;
+//        [self resetAudioUnit];
+//        self.running = YES;
+//    }
+    NSLog(@"session.sampleRate %f",session.sampleRate);
     if (session.currentRoute) {
         if (session.currentRoute.inputs) {
             NSArray<AVAudioSessionPortDescription *>*inputs = session.currentRoute.inputs;

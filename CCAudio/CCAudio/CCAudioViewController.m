@@ -49,7 +49,7 @@
     
     if (!_audioCapture) {
         GSLiveAudioConfiguration *config = [GSLiveAudioConfiguration new];
-        config.audioSampleRate = GSLiveAudioSampleRate_16000Hz;
+        config.audioSampleRate = GSLiveAudioSampleRate_48000Hz;
         config.numberOfChannels = 1;
         _audioCapture = [[GSAudioCapture alloc] initWithAudioConfiguration:config];
         _audioCapture.delegate = self;
@@ -95,7 +95,7 @@
     
     //输出需要和录制的参数一致，特别是采样率
     GSLiveAudioConfiguration *config = [GSLiveAudioConfiguration new];
-    config.audioSampleRate = GSLiveAudioSampleRate_16000Hz;
+    config.audioSampleRate = GSLiveAudioSampleRate_48000Hz;
     config.numberOfChannels = 1;
     
     if (!_unitPlayer) {
